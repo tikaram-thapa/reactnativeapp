@@ -7,20 +7,32 @@
  */
 
 import React, { Component } from "react";
-import { Router, Stack, Scene } from "react-native-router-flux";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 
-import LoginPage from "./components/LoginPage";
-import Home from "./components/Home";
+import Login from "./src/pages/Login";
 
 export default class App extends Component {
   render() {
     return (
-      <Router>
-        <Stack key="root">
-          <Scene key="login" component={LoginPage} />
-          <Scene key="home" component={Home} />
-        </Stack>
-      </Router>
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#004c8b" barStyle="light-content" />
+        <Login />
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0277bc"
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10,
+    color: "#ffffff"
+  }
+});

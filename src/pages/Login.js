@@ -18,7 +18,7 @@ const instructions = Platform.select({
 
 const messageStatus = "MSNP React App";
 
-export default class LoginPage extends Component {
+export default class Login extends Component {
   state = {
     username: "",
     password: ""
