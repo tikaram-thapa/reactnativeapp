@@ -7,7 +7,6 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
 import { Provider } from "react-redux";
 
 import Main from "./src/Main";
