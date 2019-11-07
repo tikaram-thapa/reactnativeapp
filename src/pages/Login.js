@@ -4,10 +4,12 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  Alert
+  TouchableOpacity
 } from "react-native";
+import { Actions } from "react-native-router-flux";
+
+import Logo from "../components/Logo";
+import Form from "../components/Form";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -16,25 +18,10 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-const messageStatus = "MSNP React App";
-
 export default class Login extends Component {
-  state = {
-    username: "",
-    password: ""
-  };
-
-  usernameChangedHandler = value => {
-    this.setState({
-      username: value
-    });
-  };
-
-  passwordChangeHandler = value => {
-    this.setState({
-      password: value
-    });
-  };
+  passwordReset() {
+    Actions.passwordReset();
+  }
 
   render() {
     return (
@@ -42,25 +29,14 @@ export default class Login extends Component {
         {/* <Text style={styles.welcome}>Welcome to React Native!</Text> */}
         {/* <Text style={styles.instructions}>To get started, edit App.js</Text> */}
         {/* <Text style={styles.instructions}>{instructions}</Text> */}
-        <Text style={styles.welcome}>{messageStatus}</Text>
-        <TextInput
-          style={styles.textinput}
-          placeholder="Username"
-          type
-          value={this.state.username}
-          onChangeText={this.usernameChangedHandler}
-        />
-        <TextInput
-          style={styles.textinput}
-          placeholder="Password"
-          secureTextEntry={true}
-          value={this.state.password}
-          onChangeText={this.passwordChangeHandler}
-        />
-        <Button
-          title="Login"
-          onPress={() => Alert.alert("Simple Button pressed")}
-        />
+        <Logo />
+        <Form type="Login" />
+        <View style={styles.forgotPasswordCont}>
+          <Text style={styles.textColor}>Forgot password?</Text>
+          <TouchableOpacity onPress={this.passwordReset}>
+            <Text style={styles.clickHere}>Click Here</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -71,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#0277bc"
   },
   welcome: {
     fontSize: 20,
@@ -83,10 +59,19 @@ const styles = StyleSheet.create({
     color: "#333333",
     marginBottom: 5
   },
-  textinput: {
-    backgroundColor: "#ffffff",
-    width: 200,
-    padding: 10,
-    marginBottom: 10
+  forgotPasswordCont: {
+    flexGrow: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingVertical: 16,
+    flexDirection: "row"
+  },
+  textColor: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 16
+  },
+  clickHere: {
+    color: "rgba(255, 255, 255, 0.6)",
+    fontSize: 16
   }
 });
