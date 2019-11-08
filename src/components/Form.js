@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TextInput, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Button,
+  Alert
+} from "react-native";
 
 const messageStatus = "MSNP React App";
 export default class Form extends Component {
@@ -34,10 +42,16 @@ export default class Form extends Component {
           secureTextEntry={true}
           ref={input => (this.password = input)}
         />
-        <Button
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Alert.alert("Login action")}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        {/* <Button
           title={this.props.type}
           onPress={() => Alert.alert("Login action")}
-        />
+        /> */}
       </View>
     );
   }
@@ -52,7 +66,21 @@ const styles = StyleSheet.create({
   textinput: {
     backgroundColor: "#ffffff",
     width: 200,
+    borderRadius: 5,
     padding: 10,
     marginVertical: 10
+  },
+  button: {
+    width: 200,
+    backgroundColor: "#004c8b",
+    borderRadius: 5,
+    marginVertical: 10,
+    paddingVertical: 12
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#ffffff",
+    textAlign: "center"
   }
 });

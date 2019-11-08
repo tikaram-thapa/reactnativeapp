@@ -34,7 +34,7 @@ export default class Login extends Component {
         <View style={styles.forgotPasswordCont}>
           <Text style={styles.textColor}>Forgot password?</Text>
           <TouchableOpacity onPress={this.passwordReset}>
-            <Text style={styles.clickHere}>Click Here</Text>
+            <Text style={styles.clickHere}> Click Here</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   clickHere: {
-    color: "rgba(255, 255, 255, 0.6)",
-    fontSize: 16
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "500"
   }
 });
