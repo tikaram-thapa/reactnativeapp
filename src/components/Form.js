@@ -4,28 +4,26 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text,
-  Button,
-  Alert
+  Text
 } from "react-native";
 
-const messageStatus = "MSNP React App";
 export default class Form extends Component {
-  state = {
-    username: "",
-    password: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      username: null,
+      password: null
+    };
+  }
 
-  usernameChangedHandler = value => {
+  onInputChaneHandler = (type, value) => {
     this.setState({
-      username: value
+      [type]: value
     });
   };
 
-  passwordChangeHandler = value => {
-    this.setState({
-      password: value
-    });
+  onSubmit = () => {
+    alert(this.state.username + ", " + this.state.password);
   };
 
   render() {
@@ -35,23 +33,18 @@ export default class Form extends Component {
           style={styles.textinput}
           placeholder="Username"
           onSubmitEditing={() => this.password.focus()}
+          onChangeText={value => this.onInputChaneHandler("username", value)}
         />
         <TextInput
           style={styles.textinput}
           placeholder="Password"
           secureTextEntry={true}
           ref={input => (this.password = input)}
+          onChangeText={value => this.onInputChaneHandler("password", value)}
         />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => Alert.alert("Login action")}
-        >
+        <TouchableOpacity style={styles.button} onPress={this.onSubmit}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        {/* <Button
-          title={this.props.type}
-          onPress={() => Alert.alert("Login action")}
-        /> */}
       </View>
     );
   }

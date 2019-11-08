@@ -4,52 +4,11 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
-  Button,
-  Alert
+  TouchableOpacity
 } from "react-native";
+import { Field, reduxForm } from "redux-form";
+
 import { Actions } from "react-native-router-flux";
-
-export default class PasswordReset extends Component {
-  goLogin() {
-    Actions.pop(); // login()
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.textStyle}>Forgot Password</Text>
-        <TextInput style={styles.textinput} placeholder="Username" />
-        <TextInput
-          style={styles.textinput}
-          placeholder="Old Password"
-          secureTextEntry={true}
-        />
-        <TextInput
-          style={styles.textinput}
-          placeholder="New Password"
-          secureTextEntry={true}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => Alert.alert("Change password button pressed.")}
-        >
-          <Text style={styles.buttonText}>Change Password</Text>
-        </TouchableOpacity>
-        {/* <Button
-          title="Change Password"
-          onPress={() => Alert.alert("Change password button pressed.")}
-        /> */}
-        <View style={styles.bottomTextContent}>
-          <Text style={styles.textColor}>Changed password?</Text>
-          <TouchableOpacity onPress={this.goLogin}>
-            <Text style={styles.clickHere}> Login</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -62,8 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     width: 200,
     borderRadius: 5,
-    padding: 10,
-    marginVertical: 10
+    padding: 10
   },
   textStyle: {
     fontSize: 18,
@@ -75,7 +33,6 @@ const styles = StyleSheet.create({
     width: 200,
     backgroundColor: "#004c8b",
     borderRadius: 5,
-    marginVertical: 10,
     paddingVertical: 12
   },
   buttonText: {
@@ -101,3 +58,93 @@ const styles = StyleSheet.create({
     fontWeight: "500"
   }
 });
+
+class PasswordReset extends Component {
+  goLogin() {
+    Actions.pop(); // login()
+  }
+
+  renderInput({
+    placeholder,
+    secureTextEntry,
+    input,
+    meta: { touched, error }
+  }) {
+    var hasError = false;
+    if (error !== undefined) {
+      hasError = true;
+    }
+    return (
+      <View error={hasError}>
+        <TextInput
+          style={styles.textinput}
+          placeholder={placeholder}
+          secureTextEntry={secureTextEntry}
+          {...input}
+        />
+        {hasError ? <Text>{error}</Text> : <Text />}
+      </View>
+    );
+  }
+
+  onSubmit = values => {
+    alert("on submmit" + values.username);
+  };
+
+  render() {
+    const { handleSubmit } = this.props;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.textStyle}>Forgot Password</Text>
+        <Field
+          name="username"
+          placeholder="Username"
+          component={this.renderInput}
+        />
+        <Field
+          name="oldPassword"
+          placeholder="Old Password"
+          secureTextEntry={true}
+          component={this.renderInput}
+        />
+        <Field
+          name="newPassword"
+          placeholder="New Password"
+          secureTextEntry={true}
+          component={this.renderInput}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(this.onSubmit)}
+        >
+          <Text style={styles.buttonText}>Change Password</Text>
+        </TouchableOpacity>
+        <View style={styles.bottomTextContent}>
+          <Text style={styles.textColor}>Changed password?</Text>
+          <TouchableOpacity onPress={this.goLogin}>
+            <Text style={styles.clickHere}> Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
+
+const validate = values => {
+  const error = {};
+  if (!values.username) {
+    error.username = "Username is required.";
+  }
+  if (!values.oldPassword) {
+    error.oldPassword = "Old password is required.";
+  }
+  if (!values.newPassword) {
+    error.newPassword = "New password is required.";
+  }
+  return error;
+};
+
+export default reduxForm({
+  form: "changePassword",
+  validate
+})(PasswordReset);
