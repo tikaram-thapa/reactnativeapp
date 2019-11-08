@@ -31,7 +31,7 @@ export default class Login extends Component {
         {/* <Text style={styles.instructions}>{instructions}</Text> */}
         <Logo />
         <Form type="Login" />
-        <View style={styles.forgotPasswordCont}>
+        <View style={styles.forgotPasswordContent}>
           <Text style={styles.textColor}>Forgot password?</Text>
           <TouchableOpacity onPress={this.passwordReset}>
             <Text style={styles.clickHere}> Click Here</Text>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: "#333333",
     marginBottom: 5
   },
-  forgotPasswordCont: {
+  forgotPasswordContent: {
     flexGrow: 1,
     alignItems: "flex-end",
     justifyContent: "center",

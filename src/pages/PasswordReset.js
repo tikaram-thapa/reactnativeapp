@@ -8,8 +8,13 @@ import {
   Button,
   Alert
 } from "react-native";
+import { Actions } from "react-native-router-flux";
 
 export default class PasswordReset extends Component {
+  goLogin() {
+    Actions.pop(); // login()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -35,6 +40,12 @@ export default class PasswordReset extends Component {
           title="Change Password"
           onPress={() => Alert.alert("Change password button pressed.")}
         /> */}
+        <View style={styles.bottomTextContent}>
+          <Text style={styles.textColor}>Changed password?</Text>
+          <TouchableOpacity onPress={this.goLogin}>
+            <Text style={styles.clickHere}> Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -72,5 +83,21 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#ffffff",
     textAlign: "center"
+  },
+  bottomTextContent: {
+    flexGrow: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingVertical: 16,
+    flexDirection: "row"
+  },
+  textColor: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 16
+  },
+  clickHere: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "500"
   }
 });
