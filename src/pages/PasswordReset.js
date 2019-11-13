@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     color: "rgba(255, 255, 255, 0.7)"
   },
+  errorText: {
+    color: "#c62828",
+    fontSize: 14
+  },
   button: {
     width: 200,
     backgroundColor: "#004c8b",
@@ -82,7 +86,7 @@ class PasswordReset extends Component {
           secureTextEntry={secureTextEntry}
           {...input}
         />
-        {hasError ? <Text>{error}</Text> : <Text />}
+        {touched ? <Text style={styles.errorText}>{error}</Text> : <Text />}
       </View>
     );
   }

@@ -7,10 +7,11 @@ import Routes from "./components/Routes";
 
 class Main extends Component {
   render() {
+    const { authData: { isLoggedIn } } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#004c8b" barStyle="light-content" />
-        <Routes />
+        <Routes isLoggedIn={isLoggedIn} />
       </View>
     );
   }
@@ -22,7 +23,11 @@ const styles = StyleSheet.create({
   }
 });
 
+mapStateToProps = state => ({
+  authData: state.authReducer.authData
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   null
 )(Main);
