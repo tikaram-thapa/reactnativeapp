@@ -50,7 +50,7 @@ export const logoutUser = (username) => {
       console.log("logout pressed");
       const response = await fetchApi("/api/logoutApi?username=" + username + "&access_token=" + token, "DELETE", null, 200, token);
       console.log(response);
-      if (response.success && response.responseBody.message === "logout_success") {
+      if (response.success && response.responseBody.status === 200) {
         dispatch({
           type: "USER_LOGGED_OUT_SUCCESS"
         });

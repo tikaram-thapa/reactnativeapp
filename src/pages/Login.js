@@ -6,17 +6,15 @@ import {
   TextInput,
   View,
   Alert,
-  TouchableOpacity,
-  ToastAndroid
+  TouchableOpacity
 } from "react-native";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
 import { Actions } from "react-native-router-flux";
 
 import Logo from "../components/Logo";
-import Form from "../components/Form";
 import { loginUser } from "../actions/auth.action";
 import Loader from "../components/Loader";
 import Toast from "../components/Toast";
@@ -108,7 +106,8 @@ class Login extends Component {
   loginUser = async (values) => {
     try {
       const response = await this.props.dispatch(loginUser(values));
-      // console.log(response);
+      console.log(response);
+      this.props.dispatch(reset("login"));
       if (!response.success) {
         this.setState(
           {

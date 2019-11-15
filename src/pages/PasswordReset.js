@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 
 import { Actions } from "react-native-router-flux";
 
@@ -92,7 +92,8 @@ class PasswordReset extends Component {
   }
 
   onSubmit = values => {
-    alert("on submmit" + values.username);
+    this.props.dispatch(reset("changePassword"));
+    alert("on submmit " + values.username);
   };
 
   render() {
