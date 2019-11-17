@@ -13,8 +13,6 @@ export const getMunicipalityData = (username) => {
                 type: "GET_DATA_SUCCESS",
                 payload: response.responseBody
             });
-            // console.log("municipality.action.getData");
-            // console.log(response);
             return response;
         }
     }

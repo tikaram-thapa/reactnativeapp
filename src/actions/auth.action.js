@@ -1,4 +1,4 @@
-import { fetchApi } from "../service/api";
+import { fetchAuthApi } from "../service/api";
 
 export const loginUser = (payload) => {
 
@@ -9,22 +9,20 @@ export const loginUser = (payload) => {
       dispatch({
         type: "LOGIN_USER_LOADING"
       });
-      const response = await fetchApi("/api/apiLogin?username=" + payload.username + "&password=" + payload.password, "POST", payload, 200);
+      const response = await fetchAuthApi("/api/apiLogin?username=" + payload.username + "&password=" + payload.password, "POST", payload, 200);
 
       if ((response.success) && (response.responseBody.message === "login_success")) {
         dispatch({
           type: "LOGIN_USER_SUCCESS",
         });
         dispatch({
-          type: "AUTH_USER_SUCCESS",
-          token: response.token
-        });
-        dispatch({
           type: "GET_USER_SUCCESS",
           payload: response.responseBody
         });
-        console.log("auth.action");
-        console.log(response);
+        dispatch({
+          type: "AUTH_USER_SUCCESS",
+          token: response.token
+        });
         return response;
       } else {
         throw response;
@@ -35,8 +33,6 @@ export const loginUser = (payload) => {
         type: "LOGIN_USER_FAIL",
         payload: error.responseBody
       });
-      console.log("login error");
-      console.log(error);
       return error;
     }
   }
@@ -47,9 +43,7 @@ export const logoutUser = (username) => {
     const state = getState();
     try {
       const { authReducer: { authData: { token } } } = state;
-      console.log("logout pressed");
-      const response = await fetchApi("/api/logoutApi?username=" + username + "&access_token=" + token, "DELETE", null, 200, token);
-      console.log(response);
+      const response = await fetchAuthApi("/api/logoutApi?username=" + username + "&access_token=" + token, "DELETE", null, 200, token);
       if (response.success && response.responseBody.status === 200) {
         dispatch({
           type: "USER_LOGGED_OUT_SUCCESS"

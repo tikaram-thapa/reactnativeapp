@@ -41,7 +41,7 @@ export const api = async (url, method, body = null, headers = {}) => {
   }
 }
 
-export const fetchApi = async (url, method, body, statusCode, token = null, loader = false) => {
+export const fetchAuthApi = async (url, method, body, statusCode, token = null, loader = false) => {
   try {
     const headers = {}
     const result = {
@@ -54,7 +54,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
     }
 
     const response = await api(url, method, body, headers);
-    // console.log(response);
 
     if (response.status === statusCode) {
       // if (response.headers.get("x-auth")) {
@@ -63,14 +62,12 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
 
       let responseBody;
       const responseText = await response.text();
-      // console.log(responseText);
 
       try {
         responseBody = JSON.parse(responseText);
       } catch (e) {
         responseBody = responseText;
       }
-      // console.log(responseBody);
       if (responseBody.status === statusCode) {
         result.success = true;
       } else {
@@ -79,8 +76,58 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
       result.token = responseBody.access_token
       result.responseBody = responseBody;
 
-      // console.log("fetchApi");
-      // console.log(result);
+      console.log("fetchAuthApi");
+      console.log(result);
+      return result;
+    } else {
+      let errorBody;
+      const errorText = await response.text();
+
+      try {
+        errorBody = JSON.parse(errorText);
+      } catch (e) {
+        errorBody = errorText;
+      }
+
+      result.responseBody = errorBody;
+
+      console.log("error fetchAuthApi");
+      console.log(result);
+      throw result;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export const fetchApi = async (url, method, body, statusCode, token = null, loader = false) => {
+  try {
+    const headers = {}
+    const result = {
+      success: false,
+      responseBody: null
+    };
+
+    const response = await api(url, method, body, headers);
+
+    if (response.status === statusCode) {
+      let responseBody;
+      const responseText = await response.text();
+
+      try {
+        responseBody = JSON.parse(responseText);
+      } catch (e) {
+        responseBody = responseText;
+      }
+      if (responseBody.status === statusCode) {
+        result.success = true;
+      } else {
+        result.success = false;
+      }
+      result.responseBody = responseBody;
+
+      console.log("fetchApi");
+      console.log(result);
       return result;
     } else {
       let errorBody;

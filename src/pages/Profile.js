@@ -132,22 +132,23 @@ class Profile extends Component {
     getMunicipalityData = async (username) => {
         try {
             const response = await this.props.dispatch(getMunicipalityData(username));
-            // console.log(response);
             if (response.success) {
                 const data = response.responseBody.data;
-                const coverageData = data.coverageData[0];
+                const municipalityData = data.municipalityData;
+                const budgetData = data.budgetData;
+                const activityData = data.activityData;
                 this.setState(
                     {
                         dataLoad: true,
                         municipalityData: {
-                            name: coverageData.dataCount.localleveldatavalue,
-                            address: coverageData.dataCount.districtdatavalue + ", " + coverageData.dataCount.provincedatavalue,
+                            name: municipalityData.locallevelName,
+                            address: municipalityData.districtName + ", " + municipalityData.provinceName,
                             appName: "Multi-Sectorial Nutrition Plan (MSNP)",
-                            budgetCommitment: null,
-                            budgetPlanning: null,
-                            budgetProgress: null,
-                            totalActivity: null,
-                            totalProgress: null
+                            budgetCommitment: budgetData.budgetCommitment,
+                            budgetPlanning: budgetData.budgetPlaning,
+                            budgetProgress: budgetData.budgetProgress,
+                            totalActivity: activityData.totalActivity,
+                            totalProgress: activityData.activityProgress
                         }
                     },
                     () => {
@@ -177,8 +178,6 @@ class Profile extends Component {
     render() {
         const { getUser: { userDetails }, municipalityData } = this.props;
         const user = userDetails ? userDetails.user : null
-        // console.log("profile data");
-        // console.log(getMunicipalityData);
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -196,26 +195,26 @@ class Profile extends Component {
                             <Text style={styles.font2}>Budget Planned and Expenditure Progress</Text>
                         </View>
                         <View style={styles.budgetBox}>
-                            <Text style={styles.font2}>300000</Text>
+                            <Text style={styles.font2}>{this.state.municipalityData.budgetCommitment}</Text>
                             <Text style={styles.font2}>Budget Commitment</Text>
                         </View>
                         <View style={styles.planBox}>
-                            <Text style={styles.font2}>300000</Text>
+                            <Text style={styles.font2}>{this.state.municipalityData.budgetPlanning}</Text>
                             <Text style={styles.font2}>Budget Planning</Text>
                         </View>
                         <View style={styles.progressBox}>
-                            <Text style={styles.font2}>300000</Text>
+                            <Text style={styles.font2}>{this.state.municipalityData.budgetProgress}</Text>
                             <Text style={styles.font2}>Budget Progress</Text>
                         </View>
                         <View style={styles.headerBox}>
                             <Text style={styles.font2}>Physical Progress</Text>
                         </View>
                         <View style={styles.budgetBox}>
-                            <Text style={styles.font2}>1</Text>
+                            <Text style={styles.font2}>{this.state.municipalityData.totalActivity}</Text>
                             <Text style={styles.font2}>Total Activities</Text>
                         </View>
                         <View style={styles.progressBox}>
-                            <Text style={styles.font2}>100%</Text>
+                            <Text style={styles.font2}>{this.state.municipalityData.totalProgress}</Text>
                             <Text style={styles.font2}>Activity Progress</Text>
                         </View>
                     </View>

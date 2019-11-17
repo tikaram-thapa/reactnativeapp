@@ -106,7 +106,6 @@ class Login extends Component {
   loginUser = async (values) => {
     try {
       const response = await this.props.dispatch(loginUser(values));
-      console.log(response);
       this.props.dispatch(reset("login"));
       if (!response.success) {
         this.setState(

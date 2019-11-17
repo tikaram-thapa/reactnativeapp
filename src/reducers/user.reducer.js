@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
 
 const getUser = (state = {}, action) => {
-  // console.log("user.reducer.js");
-  // console.log(action);
   switch (action.type) {
     case "GET_USER_LOADING":
       return {
